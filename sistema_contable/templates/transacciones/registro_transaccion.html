@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block titulo %} Registro de Transacción {% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+    <h5 class="card-header">Registro de Transacción</h5>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card border-danger mb-3">
+                    <div class="card-header text-danger fw-bold">Cargo</div>
+                    <div class="card-body">
+                        <p class="card-title fs-6">Clase de cuenta:</p>
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                            <select class="form-select" id="autoSizingSelect">
+                                <option selected>Selecciona una opción...</option>
+                                <option value="1">Activo</option>
+                                <option value="2">Pasivo</option>
+                                <option value="3">Capital</option>
+                            </select>
+                        </div>   
+                    </div>
+
+                    <div class="card-body">
+                        <p class="card-title fs-6">Cuenta:</p>
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                            <select class="form-select" id="autoSizingSelect">
+                                <option selected>Selecciona una opción...</option>
+                                <option value="1">Caja</option>
+                                <option value="2">Banco</option>
+                                <option value="3">...</option>
+                            </select>
+                        </div>   
+                    </div>
+                </div>     
+
+                <div class="card border-primary mb-3">
+                    <div class="card-header text-primary fw-bold">Abono</div>
+                    <div class="card-body">
+                        <p class="card-title">Clase de cuenta:</p>
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                            <select class="form-select" id="autoSizingSelect">
+                                <option selected>Selecciona una opción...</option>
+                                <option value="1">Activo</option>
+                                <option value="2">Pasivo</option>
+                                <option value="3">Capital</option>
+                            </select>
+                        </div>   
+                    </div>
+
+                    <div class="card-body">
+                        <p class="card-title">Cuenta:</p>
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                            <select class="form-select" id="autoSizingSelect">
+                                <option selected>Selecciona una opción...</option>
+                                <option value="1">Caja</option>
+                                <option value="2">Banco</option>
+                                <option value="3">...</option>
+                            </select>
+                        </div>   
+                    </div>
+                </div>                   
+            </div>
+
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Monto:</p>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" aria-label="Cantidad (al dólar más cercano)">
+                            <span class="input-group-text">.00</span>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                            <label class="form-check-label" for="flexCheckIndeterminate">IVA (13%)</label>
+                        </div>
+                        <br>
+                        <p class="card-title">Fecha:</p>
+                        <div class="form-group">
+                            <input type="date" class="form-control" id="fecha">
+                        </div>
+                        
+                            
+                        <br>
+                        <p class="card-title">Concepto:</p>
+                        <div class="input-group">
+                            <textarea class="form-control"></textarea>
+                        </div>
+
+                    </div>                    
+                </div>
+                <br> 
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-success" type="button">Registrar</button>
+                    <button class="btn btn-warning" type="button">Limpiar</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+   
+{% endblock %}
