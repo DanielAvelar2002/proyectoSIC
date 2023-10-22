@@ -5,7 +5,99 @@
 
 {% block contenido %}
 
-Mano de Obra
+
+<div class="card">
+    <h5 class="card-header">Mano de Obra</h5>
+    <div class="card-body">
+        <div class="row row-cols-1 row-cols-md-3 g-5">   
+            <div class="col">
+                <p class="card-title">Nombre:</p>
+                <div class="col-12">
+                    <input type="text" class="form-control" id="inputAddress">
+                </div>  
+            </div>     
+            <div class="col">
+                <p class="card-title">Salario:</p>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">$</span>
+                    <input type="text" class="form-control" aria-label="Cantidad (al dólar más cercano)">
+                    <span class="input-group-text">.00</span>
+                </div>               
+            </div>
+            <div class="col">
+                <p class="card-title">Puesto:</p>
+                <div class="col-12">
+                    <input type="text" class="form-control" id="inputAddress">
+                </div>  
+            </div>            
+        </div>        
+        <div class="d-grid gap-3 col-3 mx-auto">
+            <button class="btn btn-success" type="button">Guardar</button>
+        </div>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-responsive table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Salario</th>
+                        <th scope="col">Puesto</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mark</td>
+                        <td>Mark</td>
+                        <td>Mark</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">Modificar</button>
+                            <button type="button" class="btn btn-warning btn-sm">Eliminar</button>                     
+                        </td>
+                    </tr><tr>
+                        <td>Mark</td>
+                        <td>Mark</td>
+                        <td>Mark</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">Modificar</button>
+                            <button type="button" class="btn btn-warning btn-sm">Eliminar</button>                     
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mark</td>
+                        <td>Mark</td>
+                        <td>Mark</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">Modificar</button>
+                            <button type="button" class="btn btn-warning btn-sm">Eliminar</button>                     
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mark</td>
+                        <td>Mark</td>
+                        <td>Mark</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm">Modificar</button>
+                            <button type="button" class="btn btn-warning btn-sm">Eliminar</button>                     
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <h5 class="card-title text-center">Contablización de la mano de obra:</h5>
+            <div class="input-group">
+                <textarea class="form-control"></textarea>
+            </div>                       
+        </div>
+        <br>
+        <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+            <button class="btn btn-success" type="button">Ver total</button>
+            <button class="btn btn-success" type="button">Guardar</button>
+        </div>            
+    </div>    
+</div>
+
+
 
 
 
