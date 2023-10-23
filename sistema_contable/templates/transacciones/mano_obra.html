@@ -4,95 +4,146 @@
 
 
 {% block contenido %}
+<script>
+    function costoMO()
+    {
+        var resultado = document.getElementById("divResultados");
 
+        var parAguinaldo = 0;
+        var aguinaldoSema = 0;
+        var isssSema = 0;
+        var afpSema = 0;
+        var costoNominal = 0;
+        var septimo = 0;
+        var diaSeptimo = 0;
+        var totalSemanal = 0;
+        var salarioDiario = parseFloat(document.getElementById("txtSalarioDiario").value);
+        var diasLaboral = parseFloat(document.getElementById("txtDiasLaorbal").value);
+        var anioLaboral = parseFloat(document.getElementById("txtAñosLaboral").value);
+
+        diaSeptimo = 7 - diasLaboral;
+        
+        var vacaSema = ((salarioDiario*15)+((salarioDiario*15)*0.30))/52;
+        vacaSema = Math.round((vacaSema + Number.EPSILON)*100)/100;
+
+        if(anioLaboral >= 1 && anioLaboral < 3) parAguinaldo = 10;
+        if(anioLaboral >= 3 && anioLaboral < 10) parAguinaldo =15;
+        if(anioLaboral >= 10) parAguinaldo = 18;
+
+        aguinaldoSema = (parAguinaldo * salarioDiario)/52;
+        aguinaldoSema = Math.round((aguinaldoSema + Number.EPSILON)*100)/100;
+
+        isssSema = ((salarioDiario*7)+vacaSema)*0.075;
+        isssSema = Math.round((isssSema+Number.EPSILON)*100)/100;
+
+        afpSema = ((salarioDiario*7)+vacaSema)*0.0775;
+        afpSema = Math.round((afpSema+Number.EPSILON)*100)/100;
+
+        septimo = diaSeptimo * salarioDiario;
+        costoNominal = diasLaboral*salarioDiario;
+
+        totalSemanal = septimo + costoNominal + vacaSema + aguinaldoSema + isssSema + afpSema;
+        totalSemanal = Math.round((totalSemanal+Number.EPSILON)*100)/100;
+        //alert(totalSemanal);
+
+        document.getElementById("uno").innerHTML = septimo;
+        document.getElementById("dos").innerHTML =  costoNominal;
+        document.getElementById("tres").innerHTML = vacaSema;
+        document.getElementById("cuatro").innerHTML = aguinaldoSema;
+        document.getElementById("cinco").innerHTML = isssSema;
+        document.getElementById("seis").innerHTML = afpSema;
+        document.getElementById("siete").innerHTML =totalSemanal;
+        // Para mostrar los resultados
+        resultado.style.display="block";
+
+    }
+</script>
 
 <div class="card">
     <h5 class="card-header">Mano de Obra</h5>
     <div class="card-body">
         <div class="row row-cols-1 row-cols-md-3 g-5">   
             <div class="col">
-                <p class="card-title">Nombre:</p>
+                <p class="card-title">Salario diario nominal:</p>
                 <div class="col-12">
-                    <input type="text" class="form-control" id="inputAddress">
+                    <input type="number" class="form-control" id="txtSalarioDiario">
                 </div>  
             </div>     
             <div class="col">
-                <p class="card-title">Salario:</p>
+                <p class="card-title">Dias laborados semanalmente:</p>
                 <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
-                    <input type="text" class="form-control" aria-label="Cantidad (al dólar más cercano)">
+                    <input type="number" class="form-control" aria-label="Cantidad (al dólar más cercano)" id="txtDiasLaorbal">
                     <span class="input-group-text">.00</span>
                 </div>               
             </div>
             <div class="col">
-                <p class="card-title">Puesto:</p>
+                <p class="card-title">Años laborados:</p>
                 <div class="col-12">
-                    <input type="text" class="form-control" id="inputAddress">
+                    <input type="number" class="form-control" id="txtAñosLaboral">
                 </div>  
             </div>            
         </div>        
         <div class="d-grid gap-3 col-3 mx-auto">
-            <button class="btn btn-success" type="button">Guardar</button>
+            <button id="bton2" class="btn btn-success" onclick="costoMO()">Ingresar</button>
         </div>
-        <br>
-        <div class="table-responsive">
-            <table class="table table-responsive table-hover table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Salario</th>
-                        <th scope="col">Puesto</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">Modificar</button>
-                            <button type="button" class="btn btn-warning btn-sm">Eliminar</button>                     
-                        </td>
-                    </tr><tr>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">Modificar</button>
-                            <button type="button" class="btn btn-warning btn-sm">Eliminar</button>                     
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">Modificar</button>
-                            <button type="button" class="btn btn-warning btn-sm">Eliminar</button>                     
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm">Modificar</button>
-                            <button type="button" class="btn btn-warning btn-sm">Eliminar</button>                     
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <h5 class="card-title text-center">Contablización de la mano de obra:</h5>
-            <div class="input-group">
-                <textarea class="form-control"></textarea>
-            </div>                       
-        </div>
-        <br>
-        <div class="d-grid gap-4 d-md-flex justify-content-md-end">
-            <button class="btn btn-success" type="button">Ver total</button>
-            <button class="btn btn-success" type="button">Guardar</button>
+        <div  id = "divResultados"class="col-lg-6 mb-4" style="display:none;">
+
+            <!-- Illustrations Finanzas-->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Resultados</h6>
+                </div>
+                <div class="card-body">
+                    
+                    <h4 class="small font-weight-bold">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Salario y prestaciones</th>
+                                        <th style="text-align: center;">Valor semanal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Séptimo</td>
+                                        <td style="text-align: center;">$<label id = "uno"> </label></td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Costo de salario nominal</td>
+                                        <td style="text-align: center;">$<label id = "dos"> </label></td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Vacaciones</td>
+                                        <td style="text-align: center;">$<label id = "tres"> </label></td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Aguinaldo</td>
+                                        <td style="text-align: center;">$<label id = "cuatro"> </label></td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Aportación ISSS Patronal</td>
+                                        <td style="text-align: center;">$<label id = "cinco"> </label></td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Aportación AFP Patronal</td>
+                                        <td style="text-align: center;">$<label id = "seis"> </label></td> 
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: bolder;">Costo Real de Mano de Obra</td>
+                                        <td style="font-weight: bolder; text-align: center;">$<label id = "siete"> </label></td> 
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </h4>
+                    <a href="manoObra" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-recycle fa-sm text-white-50"></i> Reiniciar</a>   
+                </div>
+            </div>
+
         </div>            
     </div>    
 </div>
