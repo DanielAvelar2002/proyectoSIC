@@ -19,36 +19,155 @@
                 <tbody>
                     <tr>
                         <th scope="row">1</th>
-                        <td>Mark</td>
+                        <td>Activos</td>
                     </tr>
+                    
+                    <tr>
+                        <th scope="row">11</th>
+                        <td>Corrientes</td>
+                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 1 %}
+                                {% if cata.grupo_cuenta.id_grupo == 1 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">12</th>
+                        <td>No Corriente</td>
+                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 1 %}
+                                {% if cata.grupo_cuenta.id_grupo == 2 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
                     <tr>
                         <th scope="row">2</th>
-                        <td>Jacob</td>
+                        <td>Pasivos</td>
                     </tr>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
+                        <th scope="row">21</th>
+                        <td>Corrientes</td>
+                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 2 %}
+                                {% if cata.grupo_cuenta.id_grupo == 1 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">22</th>
+                        <td>No Corrientes</td>
+                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 2 %}
+                                {% if cata.grupo_cuenta.id_grupo == 2 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Patrimonio</td>
                     </tr>
                     <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
+                        <th scope="row">31</th>
+                        <td>Capital Contable</td>
+                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 3 %}
+                                {% if cata.grupo_cuenta.id_grupo == 31 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Cuentas con resultado deudor</td>
                     </tr>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
+                        <th scope="row">41</th>
+                        <td>Costos</td>
+                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 4 %}
+                                {% if cata.grupo_cuenta.id_grupo == 41 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">41</th>
+                        <td>Gastos</td>
+                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 4 %}
+                                {% if cata.grupo_cuenta.id_grupo == 42 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Cuentas con resultado acreedor</td>
                     </tr>
                     <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
+                        <th scope="row">51</th>
+                        <td>Ingresos</td>
+                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 5 %}
+                                {% if cata.grupo_cuenta.id_grupo == 51 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>Cuentas de cierre</td>
                     </tr>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
+                        <th scope="row">61</th>
+                        <td>Ingresos</td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                    </tr>
+                    {% for cata in cuentas %}
+                        {% if cata.clase_cuenta.id_clase == 6 %}
+                                {% if cata.grupo_cuenta.id_grupo == 61 %}
+                                    <tr>
+                                        <th scope="row">{{cata.id_cuenta}}</th>
+                                        <td>{{cata.nombre_cuenta}}</td>
+                                    </tr>
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
