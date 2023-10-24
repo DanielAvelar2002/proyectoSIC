@@ -5,6 +5,72 @@
 
 {% block contenido %}
 
-Inicio - Sistema Contable
+<!-- Parte inicial -->
+<div class="d-sm-flex align-items-center justify-content-lg-center mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Pantalla principal</h1>
+</div>
+
+<!-- General contenido de capital, venta e inventario en fila -->
+<div class="row justify-content-lg-center">
+
+    <!-- Cantidad del capital -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Capital</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"> $ {{total}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Valor de las ventas -->
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Ventas Periodo Contable</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$ {{ventas}} </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contenido especifico -->
+<div class="row" >
+
+    <div class="col-lg-6 mb-4" style="margin:0px auto;">
+
+        <!-- Illustrations Finanzas-->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    {% load static %}
+                    <img src="{% static 'sistemacontable/logo.png' %}" alt="Mi imagen">
+                </div>
+                <p><!-- texto --></p>
+                <a target="_blank" rel="nofollow" href="https://undraw.co/"></a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

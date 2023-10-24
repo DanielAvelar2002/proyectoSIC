@@ -3,7 +3,12 @@ from django.http import HttpResponse
 
 # Create your views here.
 def inicio(request):
-    return render(request, 'transacciones/index.html')
+    #capital = Cuenta.objects.get(idcuenta = 3101)
+    #utilidad = Cuenta.objects.get(idcuenta = 3102)
+    #venta = Cuenta.objects.get(idcuenta =5101)
+    #venta.habercuenta
+    #total = capital.habercuenta+utilidad.habercuenta
+    return render(request, 'transacciones/index.html')#,{"total":total,"venta":venta})
 
 def registroTransaccion(request):
     return render(request, 'transacciones/registro_transaccion.html')    
