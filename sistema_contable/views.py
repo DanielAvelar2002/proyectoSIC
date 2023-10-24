@@ -15,7 +15,9 @@ def manoObra(request):
     return render(request, 'transacciones/mano_obra.html')    
 
 def costos(request):
-    return render(request, 'transacciones/costos.html')    
+    return render(request, 'transacciones/costos.html')   
+
+ 
 
 def balanzaComprobacion(request):
     return render(request, 'transacciones/balanza_comprobacion.html')    
