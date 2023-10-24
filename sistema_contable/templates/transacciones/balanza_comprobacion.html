@@ -4,6 +4,59 @@
 
 
 {% block contenido %}
+<div class="card">
+    <h5 class="card-header">Balance de Comprobación</h5>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Código de Cuenta</th>
+                    <th>Nombre de Cuenta</th>
+                    <th>Total Debe</th>
+                    <th>Total Haber</th>
+                </tr>
+                {% for cuenta in balance %}
+                <tr>
+                    <td>{{ cuenta.codigo_cuenta }}</td>
+                    <td>{{ cuenta.nombre_cuenta }}</td>
+                    <td>{{ cuenta.total_debe }}</td>
+                    <td>{{ cuenta.total_haber }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            <p class="fw-bolder text-center">Total General Debe: {{ total_general_debe }}</p>
+            <p class="fw-bolder text-center">Total General Haber: {{ total_general_haber }}</p>
+            
+        </div>
+    </div>
+
+    
+</div>
 
 
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Concepto</th>
+            <th>Monto</th>
+            <th>IVA</th>
+            <th>Cuenta de Cargo</th>
+            <th>Cuenta de Abono</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaccion in transacciones %}
+            <tr>
+                <td>{{ transaccion.fecha }}</td>
+                <td>{{ transaccion.concepto }}</td>
+                <td>{{ transaccion.monto }}</td>
+                <td>{{ transaccion.iva }}</td>
+                <td>{{ transaccion.cargo_cuenta }}</td>
+                <td>{{ transaccion.abono_cuenta }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
