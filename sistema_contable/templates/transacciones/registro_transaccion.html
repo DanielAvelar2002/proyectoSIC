@@ -4,22 +4,6 @@
 
 {% block contenido %}
 
-<div class="card">
-    <h5 class="card-header">Registro de Transacción</h5>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card border-danger mb-3">
-                    <div class="card-header text-danger fw-bold">Cargo</div>
-                    <div class="card-body">
-                        <p class="card-title fs-6">Clase de cuenta:</p>
-                        <div class="col-auto">
-                            <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                            <select class="form-select" id="autoSizingSelect">
-                                <option selected>Selecciona una opción...</option>
-                                <option value="1">Activo</option>
-                                <option value="2">Pasivo</option>
-                                <option value="3">Capital</option>
 <form method="post" action="{% url 'registroTransaccion' %}" onsubmit="return validarMonto()">
     {% csrf_token %}
     <div class="card">
