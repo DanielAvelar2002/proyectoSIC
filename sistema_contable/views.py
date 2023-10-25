@@ -29,10 +29,8 @@ def registroTransaccion(request):
 
 
 def catalogoCuentas(request):
-    cuentas_pasivos = Cuenta.objects.filter(clase=1)
-    cuentas_activos = Cuenta.objects.filter(clase=2)
+    return render(request, 'transacciones/catalogo_cuentas.html')
 
-    return render(request, 'transacciones/catalogo_cuentas.html', {'cuentas_activos': cuentas_activos, 'cuentas_pasivos': cuentas_pasivos})
 
 def manoObra(request):
     return render(request, 'transacciones/mano_obra.html')    
