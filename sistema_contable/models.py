@@ -1,7 +1,6 @@
 from django.db import models
 from decimal import Decimal
 
-
 # Create your models here.
 class ClaseCuenta(models.Model):
     nombre = models.CharField(max_length=100)
@@ -10,7 +9,7 @@ class ClaseCuenta(models.Model):
         return self.nombre
 
 class Cuenta(models.Model):
-    codigoCA = models.CharField(max_length=10, default='ValorPredeterminado')
+    codigoCA = models.CharField(max_length=10)
     nombre = models.CharField(max_length=100)
     clase = models.ForeignKey(ClaseCuenta, on_delete=models.CASCADE)
     saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -39,7 +38,7 @@ class Transaccion(models.Model):
         return f"{self.concepto} ({self.monto})"
 
     
-    def save(self, *args, **kwargs):        
+    def save(self, *args, **kwargs):       
 
         #Si selecciona Iva credito fiscal
         if self.iva == 'CreditoFiscal':
