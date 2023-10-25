@@ -12,12 +12,19 @@ class ClaseCuenta(models.Model):
 class Cuenta(models.Model):
     codigoCA = models.CharField(max_length=10, default='ValorPredeterminado')
     nombre = models.CharField(max_length=100)
-    clase = models.ForeignKey(ClaseCuenta, on_delete=models.CASCADE)
+    CLASES_DE_CUENTA = (
+        (1, 'Activo'),
+        (2, 'Pasivo'),
+        (3, 'Capital'),
+        (4, 'Otros'),
+    )
+
+    clase = models.IntegerField(choices=CLASES_DE_CUENTA)
     saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
-        #return self.nombre
-        return f"{self.nombre} ({self.clase.nombre}) ({self.saldo})"
+        return self.nombre
+        #return f"{self.nombre} ({self.clase.nombre}) ({self.saldo})"
     
 class Transaccion(models.Model):
     fecha = models.DateField()
@@ -59,12 +66,8 @@ class Transaccion(models.Model):
         if self.abono_cuenta.clase != self.abono_clase:
             raise ValidationError("La cuenta de abono no pertenece a la clase seleccionada.")
 
-    class Meta:
-        verbose_name = "Transacción"
-        verbose_name_plural = "Transacciones"
-
-    def save(self, *args, **kwargs):
-        
+   
+    def save(self, *args, **kwargs):        
 
         #Si selecciona Iva credito fiscal
         if self.iva == 'CreditoFiscal':

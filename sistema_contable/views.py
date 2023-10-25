@@ -29,7 +29,10 @@ def registroTransaccion(request):
 
 
 def catalogoCuentas(request):
-    return render(request, 'transacciones/catalogo_cuentas.html')
+    cuentas_pasivos = Cuenta.objects.filter(clase=1)
+    cuentas_activos = Cuenta.objects.filter(clase=2)
+
+    return render(request, 'transacciones/catalogo_cuentas.html', {'cuentas_activos': cuentas_activos, 'cuentas_pasivos': cuentas_pasivos})
 
 def manoObra(request):
     return render(request, 'transacciones/mano_obra.html')    
@@ -44,18 +47,21 @@ def balanzaComprobacion(request):
     balance = []
 
     for cuenta in cuentas:
-        transacciones_debe = Transaccion.objects.filter(cargo_cuenta=cuenta)
-        transacciones_haber = Transaccion.objects.filter(abono_cuenta=cuenta)
+       # Excluye las cuentas de IVA Débito Fiscal y Crédito Fiscal
+        if cuenta.nombre not in ["Iva debito fiscal", "Iva credito fiscal"]:
 
-        total_debe = sum(transaccion.monto for transaccion in transacciones_debe)
-        total_haber = sum(transaccion.monto for transaccion in transacciones_haber)
+            transacciones_debe = Transaccion.objects.filter(cargo_cuenta=cuenta)
+            transacciones_haber = Transaccion.objects.filter(abono_cuenta=cuenta)
 
-        balance.append({
-            'codigo_cuenta':cuenta.codigoCA, #campor personalizado
-            'nombre_cuenta': cuenta.nombre,
-            'total_debe': total_debe,
-            'total_haber': total_haber,
-        })
+            total_debe = sum(transaccion.monto for transaccion in transacciones_debe)
+            total_haber = sum(transaccion.monto for transaccion in transacciones_haber)
+
+            balance.append({
+                'codigo_cuenta': cuenta.codigoCA,  # campo personalizado
+                'nombre_cuenta': cuenta.nombre,
+                'total_debe': total_debe,
+                'total_haber': total_haber,
+            })
 
     total_general_debe = sum(cuenta['total_debe'] for cuenta in balance)
     total_general_haber = sum(cuenta['total_haber'] for cuenta in balance)

@@ -32,29 +32,37 @@
 </div>
 
 <br>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Concepto</th>
-            <th>Monto</th>
-            <th>IVA</th>
-            <th>Cuenta de Cargo</th>
-            <th>Cuenta de Abono</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for transaccion in transacciones %}
-            <tr>
-                <td>{{ transaccion.fecha }}</td>
-                <td>{{ transaccion.concepto }}</td>
-                <td>{{ transaccion.monto }}</td>
-                <td>{{ transaccion.iva }}</td>
-                <td>{{ transaccion.cargo_cuenta }}</td>
-                <td>{{ transaccion.abono_cuenta }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+
+<div class="card">
+    <h5 class="card-header">Libro Mayor</h5>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>IVA</th>
+                        <th>Cuenta de Cargo</th>
+                        <th>Cuenta de Abono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaccion in transacciones %}
+                        <tr>
+                            <td>{{ transaccion.fecha }}</td>
+                            <td>{{ transaccion.concepto }}</td>
+                            <td>{{ transaccion.monto }}</td>
+                            <td>{{ transaccion.iva }}</td>
+                            <td>{{ transaccion.cargo_cuenta }}</td>
+                            <td>{{ transaccion.abono_cuenta }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div> 
+</div>
 
 {% endblock %}

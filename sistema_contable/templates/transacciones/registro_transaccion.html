@@ -62,7 +62,7 @@
                             <select name="cargo_cuenta" class="form-select cuenta-select"  data-clase-id="" required>
                                 <option value="" selected disabled>Selecciona una cuenta</option>
                                 {% for cuenta in cuentas %}
-                                    <option value="{{ cuenta.id }}" data-clase-id="{{ cuenta.clase_id }}">{{ cuenta.nombre }}</option>
+                                    <option value="{{ cuenta.id }}" data-clase-id="{{ cuenta.clase_id }}"> {{ cuenta.nombre }} ({{ cuenta.clase }}) </option>
                                 {% endfor %}
                             </select><br>
                         </div>  
@@ -85,7 +85,7 @@
                             <select name="abono_cuenta" class="form-select" required>
                                 <option value="" selected disabled>Selecciona una cuenta</option>
                                 {% for cuenta in cuentas %}
-                                    <option value="{{ cuenta.id }}">{{ cuenta.nombre }}</option>
+                                    <option value="{{ cuenta.id }}">{{ cuenta.nombre }} ({{ cuenta.clase }})</option>
                                 {% endfor %}
                             </select><br>
                         </div>                    
@@ -102,22 +102,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
-
-//Validacion de tipo de cuenta NO FUNCIONA :(
-$(document).ready(function() {
-    // Cuando cambia la selección de Clase de Cuenta de Cargo
-    $("#cargo_clase").on("change", function() {
-        var claseSeleccionada = $(this).val();
-        $(".cuenta-select").each(function() {
-            if ($(this).find("option:selected").data("clase-id") === claseSeleccionada || $(this).find("option:selected").data("clase-id") === "") {
-                $(this).prop("disabled", false);
-            } else {
-                $(this).prop("disabled", true);
-            }
-        });
-    });
-});
 
 //Boton de limpiar campos
 $(document).ready(function() {
@@ -139,8 +123,6 @@ function validarMonto() {
 
     return true;
 }
-
 </script>
-
    
 {% endblock %}
