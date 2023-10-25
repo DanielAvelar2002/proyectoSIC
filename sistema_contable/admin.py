@@ -7,6 +7,6 @@ from sistema_contable.models import *
 class CuentasAdmin(admin.ModelAdmin):
    readonly_fields=("created", "updated")
 
-admin.site.register(Clase_Cuenta)
-admin.site.register(Grupo_Cuenta)
-admin.site.register(Cuenta_Cuenta)
+admin.site.register(ClaseCuenta)
+admin.site.register(Cuenta)
+admin.site.register(Transaccion)
