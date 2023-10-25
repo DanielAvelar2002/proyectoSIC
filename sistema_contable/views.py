@@ -1,13 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Transaccion, ClaseCuenta, Cuenta
+from .models import *
 from .forms import TransaccionForm
 from django.http import JsonResponse
+from django.contrib import messages
 
 
 # Create your views here.
 def inicio(request):
-    return render(request, 'transacciones/index.html')
+    capital = Cuenta.objects.get(codigoCA  = 3101)
+    utilidad = Cuenta.objects.get(codigoCA = 3102)
+    venta = Cuenta.objects.get(codigoCA = 5101)
+    ventasp=venta.saldo * (-1)
+    total = capital.saldo+utilidad.saldo
+    return render(request, 'transacciones/index.html',{"total":total,"venta":ventasp})
 
 def registroTransaccion(request):
     if request.method == 'POST':
@@ -40,6 +46,43 @@ def manoObra(request):
 def costos(request):
     return render(request, 'transacciones/costos.html')    
 
+def ingresarOrden(request):
+    try:
+        cantidadP = Decimal(request.POST['txtCantidad'])
+        materiaDirecta = Decimal(request.POST['txtUno'])
+        manoObraDirecta = Decimal(request.POST['txtDos'])
+        costoIndirecto = Decimal(request.POST['txtTres'])
+        ventas = Decimal(request.POST['txtCinco'])
+
+        materiaDirecta = materiaDirecta*cantidadP
+        manoObraDirecta = manoObraDirecta*cantidadP
+        costoIndirecto = costoIndirecto*cantidadP
+        costo = manoObraDirecta + materiaDirecta + costoIndirecto 
+        
+        objetoMD = Cuenta.objects.get(codigoCA = 4101)
+        objetoMD.saldo = objetoMD.saldo + costo
+        objetoMD.save()
+
+        objetoCaja = Cuenta.objects.get(codigoCA =1101)
+        objetoCaja.saldo = objetoCaja.saldo - costo
+        objetoCaja.save()
+
+        objetoVenta = Cuenta.objects.get(codigoCA = 5101)
+        objetoVenta.saldo = objetoVenta.saldo - (ventas *cantidadP)
+        objetoVenta.save()
+
+        objetoCaja = Cuenta.objects.get(codigoCA =1101)
+        objetoCaja.saldo = objetoCaja.saldo + (ventas *cantidadP)
+        objetoCaja.save()
+
+          
+        messages.success(request,'¡Orden de fabricación registrada con éxito!')
+    except Exception as e:
+        messages.error(request,e)
+        
+
+    return redirect('/costos')
+    
 def balanzaComprobacion(request):
     transacciones = Transaccion.objects.all() #para tener todas las transacciones
 

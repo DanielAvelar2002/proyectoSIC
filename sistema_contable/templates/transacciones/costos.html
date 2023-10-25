@@ -24,6 +24,7 @@
         var serviciosproducidos = 0;
         var costosvariablestotales = 0;
         
+        
 
         var cantidad = parseFloat(document.getElementById("numCantidad").value);
         var precioHardware = parseFloat(document.getElementById("txtharware").value);
@@ -76,6 +77,7 @@
         document.getElementById("txtDos").value = MOD;
         document.getElementById("txtTres").value = CIF;
         document.getElementById("txtCuatro").value = CostoV;
+        document.getElementById("txtCinco").value = PrecioVentaUnitario;
         document.getElementById("txtCantidad").value = cantidad;
         
 
@@ -279,11 +281,13 @@
                     
                     <div class="card-body" style="display:block; text-align: center;">
                         <h4 class="small font-weight-bold">Margen unitario de utilidad: </h4>
-                        <label>$</label><label id = "cinco" name = "cinco"></label> 
+                        <label>$</label><label id = "cinco" name = "cinco"></label>
+                         
                     </div>
                     <div class="card-body" style="display:block; text-align: center;">
                         <h4 class="small font-weight-bold">Precio de venta unitario: </h4>
-                        <label>$</label><label id = "seis" name = "seis"></label>   
+                        <label>$</label><label id = "seis" name = "seis"></label>
+                        <input style="display: none;" type="text" id = "txtCinco" name = "txtCinco" class="form-control">   
                     </div> 
                     <input style="display: none;" type="text" id = "txtCantidad" name = "txtCantidad" class="form-control">
 

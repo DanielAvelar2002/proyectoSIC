@@ -11,5 +11,6 @@ urlpatterns=[
     path('balanzaComprobacion', views.balanzaComprobacion, name='balanzaComprobacion'),
     path('hojaTrabajo', views.hojaTrabajo, name='hojaTrabajo'),
     path('cierraContable', views.cierraContable, name='cierraContable'),
+    path('ingresarOrden/',views.ingresarOrden),
 
 ]
