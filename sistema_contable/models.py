@@ -1,7 +1,6 @@
 from django.db import models
 from decimal import Decimal
 
-
 # Create your models here.
 class ClaseCuenta(models.Model):
     nombre = models.CharField(max_length=100)
@@ -10,16 +9,9 @@ class ClaseCuenta(models.Model):
         return self.nombre
 
 class Cuenta(models.Model):
-    codigoCA = models.CharField(max_length=10, default='ValorPredeterminado')
+    codigoCA = models.CharField(max_length=10)
     nombre = models.CharField(max_length=100)
-    CLASES_DE_CUENTA = (
-        (1, 'Activo'),
-        (2, 'Pasivo'),
-        (3, 'Capital'),
-        (4, 'Otros'),
-    )
-
-    clase = models.IntegerField(choices=CLASES_DE_CUENTA)
+    clase = models.ForeignKey(ClaseCuenta, on_delete=models.CASCADE)
     saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
@@ -37,37 +29,16 @@ class Transaccion(models.Model):
         ('DebitoFiscal', 'IVA Débito Fiscal'),
         ('Ninguno', 'Ninguno'),
     ]
-    iva = models.CharField(max_length=15, choices=IVA_CHOICES, default='Ninguno')
-   
+    iva = models.CharField(max_length=15, choices=IVA_CHOICES, default='Ninguno')   
 
-    cargo_clase = models.ForeignKey(ClaseCuenta, related_name='cargos', on_delete=models.CASCADE)
     cargo_cuenta = models.ForeignKey(Cuenta, related_name='cargos', on_delete=models.CASCADE)
-    abono_clase = models.ForeignKey(ClaseCuenta, related_name='abonos', on_delete=models.CASCADE)
     abono_cuenta = models.ForeignKey(Cuenta, related_name='abonos', on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.concepto} ({self.monto})"
+
     
-    #validaciones dentro del user admin
-    def save(self, *args, **kwargs):
-        if self.cargo_clase and not self.cargo_cuenta.clase == self.cargo_clase:
-            raise ValueError("La cuenta de cargo no pertenece a la clase seleccionada.")
-        if self.abono_clase and not self.abono_cuenta.clase == self.abono_clase:
-            raise ValueError("La cuenta de abono no pertenece a la clase seleccionada.")
-        super(Transaccion, self).save(*args, **kwargs)
-
-    def clean(self):
-        if self.monto < 0:
-            raise ValidationError("El monto no puede ser negativo.")
-
-        if self.cargo_cuenta.clase != self.cargo_clase:
-            raise ValidationError("La cuenta de cargo no pertenece a la clase seleccionada.")
-
-        if self.abono_cuenta.clase != self.abono_clase:
-            raise ValidationError("La cuenta de abono no pertenece a la clase seleccionada.")
-
-   
-    def save(self, *args, **kwargs):        
+    def save(self, *args, **kwargs):       
 
         #Si selecciona Iva credito fiscal
         if self.iva == 'CreditoFiscal':
