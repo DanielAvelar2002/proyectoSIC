@@ -4,105 +4,125 @@
 
 {% block contenido %}
 
-<div class="card">
-    <h5 class="card-header">Hoja de Trabajo</h5>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table border">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th class="table-primary" colspan="2">Balance de Comprobación</th>
-                    <th class="table-secondary"colspan="2"">Ajustes</th>
-                    <th class="table-success" colspan="2"">Balance Ajustado</th>
-                    <th class="table-danger" colspan="2">Estado de Resultado</th>
-                    <th class="table-warning" colspan="2">Estado de capital</th>
-                    <th class="table-info" colspan="2">Balance general</th>
-                  </tr>
-                  <tr>
-                    <th scope="col">Cuenta</th>
-                    <th scope="col">Debe</th>
-                    <th scope="col">Haber</th>
-                    <th scope="col">Debe</th>
-                    <th scope="col">Haber</th>
-                    <th scope="col">Debe</th>
-                    <th scope="col">Haber</th>
-                    <th scope="col">Debe</th>
-                    <th scope="col">Haber</th>
-                    <th scope="col">Debe</th>
-                    <th scope="col">Haber</th>
-                    <th scope="col">Debe</th>
-                    <th scope="col">Haber</th>                    
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                </tbody>
-                <tfoot class="border-dark">
-                    <td class="border-dark"></td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tfoot>
-              </table>
-                               
-        </div>
-        
-    </div>
-</div>
+<form method="post" action="{% url 'hojaTrabajo' %}" onsubmit="return validarMonto()">
+  {% csrf_token %}
+  <div class="card">
+      <h5 class="card-header">Registro de Ajustes</h5>
+      <div class="card-body">
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <label for="fecha">Fecha:</label>
+                          <div class="form-group">
+                              <input type="date" name="fecha"  class="form-control" required ><br>
+                          </div>
+                          <br>
+
+                          <label for="concepto">Concepto:</label>
+                          <div class="input-group">
+                              <textarea name="concepto" class="form-control" required></textarea>
+                          </div>
+                          <br>
+
+                          <label for="monto">Monto:</label>
+                          <div class="input-group mb-3">
+                              <span class="input-group-text">$</span>
+                              <input type="number" step="0.01" name="monto" required>
+                              <span class="input-group-text">.00</span>
+                          </div>                           
+                          <br>
+
+                          <label for="iva">Tipo de IVA:</label>
+                          <select name="iva" class="form-select" id="autoSizingSelect" required>
+                              <option value="Ninguno" selected>Ninguno...</option>
+                              <option value="CreditoFiscal">IVA Crédito Fiscal</option>
+                              <option value="DebitoFiscal">IVA Débito Fiscal</option>
+                          </select>
+                          <br>                                               
+                      </div>
+                  </div>
+              </div>                                               
+
+              <div class="col-sm-6">
+                  <div class="card border-danger mb-3">
+                      <div class="card-header text-danger fw-bold">Cargo</div>
+                      <div class="card-body">
+                          <!-- Campo de clase de cuenta de cargo 
+                          <label for="cargo_clase">Clase de Cuenta de Cargo:</label>
+                          <select name="cargo_clase" class="form-select" required>
+                              <option value="" selected disabled>Selecciona una clase de cuenta</option>
+                              {% for clase in clases_de_cuentas %}
+                                  <option value="{{ clase.id }}">{{ clase.nombre }}</option>
+                              {% endfor %}
+                          </select><br>-->
+                      
+                          <!-- Campo de cuenta de cargo -->
+                          <!-- <label for="cargo_cuenta">Cuenta de Cargo:</label>-->
+                          <select name="cargo_cuenta" class="form-select cuenta-select"  data-clase-id="" required>
+                              <option value="" selected disabled>Selecciona una cuenta</option>
+                              {% for cuenta in cuentas %}
+                                  <option value="{{ cuenta.id }}" data-clase-id="{{ cuenta.clase_id }}"> {{ cuenta.nombre }} ({{ cuenta.clase }}) </option>
+                              {% endfor %}
+                          </select><br>
+                      </div>  
+                  </div>
+
+                  <div class="card border-primary mb-3">
+                      <div class="card-header text-primary fw-bold">Abono</div>
+                      <div class="card-body">
+                          <!-- Campo de clase de cuenta de cargo
+                          <label for="abono_clase">Clase de Cuenta de Abono:</label>
+                          <select name="abono_clase" class="form-select" required>
+                              <option value="" selected disabled>Selecciona una clase de cuenta</option>
+                              {% for clase in clases_de_cuentas %}
+                                  <option value="{{ clase.id }}">{{ clase.nombre }}</option>
+                              {% endfor %}
+                          </select><br>-->
+                      
+                          <!-- Campo de cuenta de abono -->
+                          <!-- <label for="abono_cuenta">Cuenta de Abono:</label>-->
+                          <select name="abono_cuenta" class="form-select" required>
+                              <option value="" selected disabled>Selecciona una cuenta</option>
+                              {% for cuenta in cuentas %}
+                                  <option value="{{ cuenta.id }}">{{ cuenta.nombre }} ({{ cuenta.clase }})</option>
+                              {% endfor %}
+                          </select><br>
+                      </div>                    
+                  </div>
+
+                  <input type="submit" class="btn btn-success" value="Registrar Transacción de ajustes">     
+                  <input type="button" class="btn btn-warning" value="Limpiar Campos" id="limpiarCampos">        
+              </div>                    
+          </div>                              
+      </div>    
+  </div>
+</form> <!--FIn del Formulario-->    
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+//Boton de limpiar campos
+$(document).ready(function() {
+  // Escucha el clic en el botón "Limpiar"
+  $("#limpiarCampos").on("click", function() {
+      // Limpia todos los campos del formulario
+      $("form input[type='text'], form input[type='number'], form input[type='date'], form textarea, form select").val("");
+  });
+});
+
+//validacion de negativos
+function validarMonto() {
+  var monto = parseFloat(document.getElementsByName("monto")[0].value);
+
+  if (isNaN(monto) || monto <= 0) {
+      alert("El monto debe ser un número mayor que cero.");
+      return false;
+  }
+
+  return true;
+}
+</script>
+ 
 {% endblock %}

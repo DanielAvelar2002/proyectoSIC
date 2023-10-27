@@ -116,7 +116,19 @@ def balanzaComprobacion(request):
 
 
 def hojaTrabajo(request):
-    return render(request, 'transacciones/hoja_trabajo.html')    
+    if request.method == 'POST':
+        form = TransaccionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Puedes redirigir a una página de confirmación o hacer lo que necesites
+            #redirect('transacciones/registro_transaccion.html')
+    else:
+        form = TransaccionForm()
+
+    # Cargar opciones de clases de cuentas y cuentas desde la base de datos
+    clases_de_cuentas = ClaseCuenta.objects.all()
+    cuentas = Cuenta.objects.all()
+    return render(request, 'transacciones/hoja_trabajo.html',{'form': form, 'clases_de_cuentas': clases_de_cuentas, 'cuentas': cuentas})    
 
 def cierraContable(request):
     return render(request, 'transacciones/cierre_contable.html')    
