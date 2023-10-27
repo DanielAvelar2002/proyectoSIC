@@ -9,54 +9,25 @@
     <h5 class="card-header">Catálogo de Cuentas</h5>
     <div class="card-body">  
         <div class="row">
-            <div class="col-sm-6">      
-                <div class="card border-primary mb-3">
-                    <div class="card-header text-primary fw-bold">Activos</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Nombre</th>
-                                    <!-- Agrega más columnas según tus necesidades -->
-                                </tr>
-                                {% for cuenta in cuentas %}
-                                <tr>
-                                    <td>{{ cuenta.codigoCA }}</td>
-                                    <td>{{ cuenta.nombre }}</td>
-                                    <!-- Agrega más celdas según tus necesidades -->
-                                </tr>
-                                {% endfor %}
-                            </table>  
-                        </div>
-                    </div>
-                </div> 
-            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <!-- Agrega más columnas según tus necesidades -->
+                    </tr>
+                    {% for cuenta in cuentas %}
+                    <tr>
+                        <td>{{ cuenta.codigoCA }}</td>
+                        <td>{{ cuenta.nombre }}</td>
+                        <td>{{ cuenta.clase }}</td>
 
+                        <!-- Agrega más celdas según tus necesidades -->
+                    </tr>
+                    {% endfor %}
+                </table>  
+            </div>           
             
-            <div class="col-sm-6"> 
-                <div class="card border-danger mb-3">
-                    <div class="card-header text-danger fw-bold">Pasivos</div>
-                    <div class="card-body">
-                        <div class="table-responsive">            
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Nombre</th>
-                                    <!-- Agrega más columnas según tus necesidades -->
-                                </tr>
-                                {% for cuenta in cuentas_pasivos %}
-                                <tr>
-                                    <td>{{ cuenta.codigoCA }}</td>
-                                    <td>{{ cuenta.nombre }}</td>
-                                    <!-- Agrega más celdas según tus necesidades -->
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                </div> 
-            </div>  
         </div>        
     </div>
 </div>

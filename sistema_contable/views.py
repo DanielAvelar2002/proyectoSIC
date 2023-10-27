@@ -35,7 +35,10 @@ def registroTransaccion(request):
 
 
 def catalogoCuentas(request):
-    return render(request, 'transacciones/catalogo_cuentas.html')
+     # Obtén todas las cuentas ordenadas por el campo 'codigoCA'
+    cuentas = Cuenta.objects.all().order_by('codigoCA')
+
+    return render(request, 'transacciones/catalogo_cuentas.html', {'cuentas': cuentas})
 
 
 def manoObra(request):
