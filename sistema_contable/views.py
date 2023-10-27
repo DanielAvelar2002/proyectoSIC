@@ -11,8 +11,8 @@ def inicio(request):
     capital = Cuenta.objects.get(codigoCA  = 3101)
     utilidad = Cuenta.objects.get(codigoCA = 3102)
     venta = Cuenta.objects.get(codigoCA = 5101)
-    ventasp=venta.saldo * (-1)
-    total = capital.saldo+utilidad.saldo
+    ventasp=venta.saldo 
+    total = (capital.saldo+utilidad.saldo) * (-1)
     return render(request, 'transacciones/index.html',{"total":total,"venta":ventasp})
 
 def registroTransaccion(request):
