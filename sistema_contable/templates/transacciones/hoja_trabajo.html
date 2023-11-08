@@ -11,58 +11,11 @@
         <p class="fw-bolder text-center">Total General Debe: {{ total_general_debe }}</p>
         <p class="fw-bolder text-center">Total General Haber: {{ total_general_haber }}</p> 
         <div class="card-group">
-            <!--Balance de comprobacion-->
-            <div class="card">
-                <br>
-                <h5 class="card-title text-center">Balance de Comprobación</h5>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <tr>    
-                            <th>Cuenta</th>                        
-                            <th>Debe</th>
-                            <th>Haber</th>
-                        </tr>
-                        {% for cuenta in balance %}
-                        <tr>
-                            <td>{{ cuenta.nombre_cuenta }}</td>
-                            {% if cuenta.saldo_debe > 0 %}
-                                <td>{{ cuenta.total_debe }}</td>
-                                <td></td>
-                            {% else %}
-                                <td></td>
-                                <td>{{ cuenta.total_haber }}</td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-            <!--Ajustes
-            <div class="card">
-                <br><h5 class="card-title text-center">Ajustes</h5>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Debe</th>
-                            <th>Haber</th>
-                        </tr>
-                        {% for cuenta in balance %}
-                        <tr>
-                            <td readonly>{{ cuenta.nombre_cuenta }}</td>
-                            <td readonly>{{ cuenta.saldo_debe|default:'' }}</td>
-                            <td readonly>{{ cuenta.saldo_haber|default:'' }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                
-                </div>
-            </div>-->
             <!--Balance de Comprobacion Ajustado-->
             <div class="card">
             <br>
-                <h5 class="card-title text-center">Balance de Comprobació Ajustado</h5>
-                <div class="table-responsive">
-                    
+            <h5 class="card-title text-center">{{ titulo }}</h5> <!--Cambia el titulo del Balance General cuando se registra un ajuste-->
+                <div class="table-responsive">                        
                     <table class="table table-bordered">
                         <tr>
                             <th>Cuenta</th>
@@ -71,18 +24,20 @@
                         </tr>
                         {% for cuenta in balance %}
                         <tr>
-                            <td readonly>{{ cuenta.nombre_cuenta }}</td>
-                            <td readonly>{{ cuenta.saldo_debe|default:'' }}</td>
-                            <td readonly>{{ cuenta.saldo_haber|default:'' }}</td>
+                            <td class="table-secondary">{{ cuenta.nombre_cuenta }}</td>
+                            {% if cuenta.saldo_debe > 0 %}
+                                <td class="table-primary">$ {{ cuenta.total_debe }}</td>
+                                <td class="table-danger"> </td>
+                            {% else %}
+                                <td class="table-primary"></td>
+                                <td class="table-danger">$ {{ cuenta.total_haber }}</td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </table>
                 </div>                       
             </div>
-        </div>
-        <br>
-        <!--Columna 2-->
-        <div class="card-group">
+
             <!--Estado de Resultado-->
             <div class="card">
                 <br>
@@ -102,6 +57,11 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <br>
+        <!--Columna 2-->
+        <div class="card-group">
+            
             <!--Estado de Capital-->
             <div class="card">
                 <br>
@@ -144,8 +104,8 @@
     </div>
 <br>
 
-
-<form method="post" action="{% url 'hojaTrabajo' %}" onsubmit="return validarMonto()">
+<!--Inicio del Formulario-->    
+<form id="formulario-transaccion" method="post" action="{% url 'hojaTrabajo' %}" onsubmit="return validarMonto()">
   {% csrf_token %}
   <div class="card">
       <h5 class="card-header">Registro de Ajustes</h5>
@@ -198,12 +158,9 @@
                           </select><br>
                       </div>  
                   </div>
-
                   <div class="card border-primary mb-3">
                       <div class="card-header text-primary fw-bold">Abono</div>
-                      <div class="card-body">
-  
-
+                      <div class="card-body"> 
                           <select name="abono_cuenta" class="form-select" required>
                               <option value="" selected disabled>Selecciona una cuenta</option>
                               {% for cuenta in cuentas %}
@@ -213,7 +170,7 @@
                       </div>                    
                   </div>
 
-                  <button onclick="aplicarAjustes()">Aplicar Ajustes</button>
+                  <input type="submit" class="btn btn-success" value="Registrar Ajuste">     
                   <input type="button" class="btn btn-warning" value="Limpiar Campos" id="limpiarCampos">        
               </div>                    
           </div>                              
@@ -221,50 +178,23 @@
   </div>
 </form> <!--FIn del Formulario-->    
 
-
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Captura el formulario por su id
+    const formularioTransaccion = document.getElementById("formulario-transaccion");
+    
+    // Captura el título por su id
+    const tituloBalance = document.getElementById("balance-title");
 
-// Variables globales
-var balanceAjustado = null;
-
-// Función para cargar el Balance de Comprobación Ajustado
-function cargarBalanceAjustado() {
-    // Obtener el Balance de Comprobación Ajustado del servidor
-    $.ajax({
-        url: '/transacciones/obtener_balance_ajustado',
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            // Guardar el Balance de Comprobación Ajustado en una variable global
-            balanceAjustado = data;
-
-            // Actualizar la tabla con los datos del Balance de Comprobación Ajustado
-            updateTable();
+    // Agrega un evento de envío al formulario
+    formularioTransaccion.addEventListener("submit", function(event) {
+        // Verifica si el formulario es válido antes de cambiar el título
+        if (formularioTransaccion.checkValidity()) {
+            // Cambia el contenido del título
+            tituloBalance.textContent = "Balance de Comprobación Ajustado";
         }
     });
-}
-
-// Función para actualizar la tabla
-function updateTable() {
-    // Obtener las filas de la tabla
-    var rows = document.querySelectorAll('table tbody tr');
-
-    // Recorrer las filas de la tabla
-    for (var i = 0; i < rows.length; i++) {
-        // Obtener la cuenta de la fila actual
-        var cuenta = rows[i].querySelector('td:nth-child(1)').textContent;
-
-        // Obtener el saldo de la cuenta
-        var saldo = balanceAjustado.saldo[cuenta];
-
-        // Actualizar la celda del saldo
-        rows[i].querySelector('td:nth-child(2)').textContent = saldo;
-        rows[i].querySelector('td:nth-child(3)').textContent = saldo;
-    }
-}
-
-// Inicializar la función
-cargarBalanceAjustado();
+});
 
 </script>
 

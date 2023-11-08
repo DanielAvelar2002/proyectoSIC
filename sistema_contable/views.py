@@ -135,10 +135,16 @@ def balanzaComprobacion(request):
 
 
 def hojaTrabajo(request):
+
+    titulo='Balance de Comprobación'
+
+
     #logica para el registro de AJUSTES
     if request.method == 'POST':
         form = TransaccionForm(request.POST)
         if form.is_valid():
+            titulo='Balance de Comprobación Ajustado'
+
             form.save()
             # Puedes redirigir a una página de confirmación o hacer lo que necesites
             #redirect('transacciones/registro_transaccion.html')
@@ -148,6 +154,7 @@ def hojaTrabajo(request):
     # Cargar opciones de clases de cuentas y cuentas desde la base de datos
     clases_de_cuentas = ClaseCuenta.objects.all()
     cuentas = Cuenta.objects.all()
+
 
 
     #Logica para traer el balance de comprobacion
@@ -193,6 +200,7 @@ def hojaTrabajo(request):
     total_general_haber = sum(cuenta['total_haber'] for cuenta in balance)
 
     return render(request, 'transacciones/hoja_trabajo.html', {
+        'titulo': titulo,
         #salidas del registro de transacciones
         'form': form, 
         'clases_de_cuentas': clases_de_cuentas, 
@@ -203,6 +211,7 @@ def hojaTrabajo(request):
         'total_general_debe': total_general_debe,
         'total_general_haber': total_general_haber,
     })
+
 
 def cierraContable(request):
     return render(request, 'transacciones/cierre_contable.html')    

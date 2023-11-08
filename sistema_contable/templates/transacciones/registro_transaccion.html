@@ -48,17 +48,6 @@
                     <div class="card border-danger mb-3">
                         <div class="card-header text-danger fw-bold">Cargo</div>
                         <div class="card-body">
-                            <!-- Campo de clase de cuenta de cargo 
-                            <label for="cargo_clase">Clase de Cuenta de Cargo:</label>
-                            <select name="cargo_clase" class="form-select" required>
-                                <option value="" selected disabled>Selecciona una clase de cuenta</option>
-                                {% for clase in clases_de_cuentas %}
-                                    <option value="{{ clase.id }}">{{ clase.nombre }}</option>
-                                {% endfor %}
-                            </select><br>-->
-                        
-                            <!-- Campo de cuenta de cargo -->
-                            <!-- <label for="cargo_cuenta">Cuenta de Cargo:</label>-->
                             <select name="cargo_cuenta" class="form-select cuenta-select"  data-clase-id="" required>
                                 <option value="" selected disabled>Selecciona una cuenta</option>
                                 {% for cuenta in cuentas %}
@@ -71,17 +60,6 @@
                     <div class="card border-primary mb-3">
                         <div class="card-header text-primary fw-bold">Abono</div>
                         <div class="card-body">
-                            <!-- Campo de clase de cuenta de cargo
-                            <label for="abono_clase">Clase de Cuenta de Abono:</label>
-                            <select name="abono_clase" class="form-select" required>
-                                <option value="" selected disabled>Selecciona una clase de cuenta</option>
-                                {% for clase in clases_de_cuentas %}
-                                    <option value="{{ clase.id }}">{{ clase.nombre }}</option>
-                                {% endfor %}
-                            </select><br>-->
-                        
-                            <!-- Campo de cuenta de abono -->
-                            <!-- <label for="abono_cuenta">Cuenta de Abono:</label>-->
                             <select name="abono_cuenta" class="form-select" required>
                                 <option value="" selected disabled>Selecciona una cuenta</option>
                                 {% for cuenta in cuentas %}
