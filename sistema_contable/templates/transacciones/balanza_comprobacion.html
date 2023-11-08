@@ -8,28 +8,34 @@
     <h5 class="card-header">Balance de Comprobación</h5>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered">
+             <table class="table table-bordered border-dark">
                 <tr>
-                    <th>Código de Cuenta</th>
-                    <th>Nombre de Cuenta</th>
-                    <th>Debe</th>
-                    <th>Haber</th>
+                    <th class="table-secondary">Codigo</th>    
+                    <th class="table-secondary">Cuenta</th>                        
+                    <th class="table-primary">Debe</th>
+                    <th class="table-danger">Haber</th>
                 </tr>
                 {% for cuenta in balance %}
                 <tr>
-                    <td>{{ cuenta.codigo_cuenta }}</td>
-                    <td>{{ cuenta.nombre_cuenta }}</td>
-                    <td>{{ cuenta.total_debe }}</td>
-                    <td>{{ cuenta.total_haber }}</td>
+                    <td class="table-secondary">{{ cuenta.codigo_cuenta }}</td>
+                    <td class="table-secondary">{{ cuenta.nombre_cuenta }}</td>
+                    {% if cuenta.saldo_debe > 0 %}
+                        <td class="table-primary">$ {{ cuenta.total_debe }}</td>
+                        <td class="table-danger"> </td>
+                    {% else %}
+                        <td class="table-primary"></td>
+                        <td class="table-danger">$ {{ cuenta.total_haber }}</td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
+                <tr>
+                    <td class="table-secondary"></td>
+                    <td class="table-secondary"><p class="fw-bolder">Totales:</td>
+                    <td class="table-primary"><p class="fw-bolder">$ {{ total_general_debe }}</p></td>
+                    <td class="table-danger"><p class="fw-bolder">$ {{ total_general_haber }}</p>   
+                    </td>
+                </tr>
             </table>
-            
-            <p class="fw-bolder text-center">Total General Debe: {{ total_general_debe }}</p>
-            <p class="fw-bolder text-center">Total General Haber: {{ total_general_haber }}</p>   
-            <p class="fw-bolder text-center">Total General Capital: {{ total_general_capital }}</p>   
-
-               
         </div>
     </div>
 </div>
@@ -56,7 +62,7 @@
                         <tr>
                             <td>{{ transaccion.fecha }}</td>
                             <td>{{ transaccion.concepto }}</td>
-                            <td>{{ transaccion.monto }}</td>
+                            <td>$ {{ transaccion.monto }}</td>
                             <td>{{ transaccion.iva }}</td>
                             <td>{{ transaccion.cargo_cuenta }}</td>
                             <td>{{ transaccion.abono_cuenta }}</td>

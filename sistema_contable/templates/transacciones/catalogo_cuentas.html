@@ -10,10 +10,11 @@
     <div class="card-body">  
         <div class="row">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-light table-bordered">
                     <tr>
                         <th>Código</th>
                         <th>Nombre</th>
+                        <th>Clase</th>
                         <!-- Agrega más columnas según tus necesidades -->
                     </tr>
                     {% for cuenta in cuentas %}
@@ -21,13 +22,11 @@
                         <td>{{ cuenta.codigoCA }}</td>
                         <td>{{ cuenta.nombre }}</td>
                         <td>{{ cuenta.clase }}</td>
-
                         <!-- Agrega más celdas según tus necesidades -->
                     </tr>
                     {% endfor %}
                 </table>  
-            </div>           
-            
+            </div>  
         </div>        
     </div>
 </div>
