@@ -12,27 +12,28 @@
                 <tr>
                     <th class="table-secondary">Codigo</th>    
                     <th class="table-secondary">Cuenta</th>                        
-                    <th class="table-primary">Debe</th>
-                    <th class="table-danger">Haber</th>
+                    <th class="table-primary">Debe ($)</th>
+                    <th class="table-danger">Haber ($)</th>
                 </tr>
+
                 {% for cuenta in balance %}
                 <tr>
                     <td class="table-secondary">{{ cuenta.codigo_cuenta }}</td>
                     <td class="table-secondary">{{ cuenta.nombre_cuenta }}</td>
                     {% if cuenta.saldo_debe > 0 %}
-                        <td class="table-primary">$ {{ cuenta.total_debe }}</td>
-                        <td class="table-danger"> </td>
+                        <td class="table-primary">{{ cuenta.total_debe|default:'' }}</td>
+                        <td class="table-danger">‎</td>
                     {% else %}
-                        <td class="table-primary"></td>
-                        <td class="table-danger">$ {{ cuenta.total_haber }}</td>
+                        <td class="table-primary">‎</td>
+                        <td class="table-danger">{{ cuenta.total_haber|default:'' }}</td>
                     {% endif %}
                 </tr>
                 {% endfor %}
                 <tr>
                     <td class="table-secondary"></td>
                     <td class="table-secondary"><p class="fw-bolder">Totales:</td>
-                    <td class="table-primary"><p class="fw-bolder">$ {{ total_general_debe }}</p></td>
-                    <td class="table-danger"><p class="fw-bolder">$ {{ total_general_haber }}</p>   
+                    <td class="table-primary"><p class="fw-bolder">{{ total_general_debe }}</p></td>
+                    <td class="table-danger"><p class="fw-bolder">{{ total_general_haber }}</p>   
                     </td>
                 </tr>
             </table>

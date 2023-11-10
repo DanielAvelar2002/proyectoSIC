@@ -11,73 +11,205 @@
         <p class="fw-bolder text-center">Total General Debe: {{ total_general_debe }}</p>
         <p class="fw-bolder text-center">Total General Haber: {{ total_general_haber }}</p> 
         <div class="card-group">
+            <div class="card">
+                <!--Inicio del Formulario-->    
+                <form id="formulario-transaccion" method="post" action="{% url 'hojaTrabajo' %}" onsubmit="return validarMonto()">
+                    {% csrf_token %}
+                    <div class="card">
+                        <h5 class="card-header">Registro de Ajustes</h5>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <label for="fecha">Fecha:</label>
+                                            <div class="form-group">
+                                                <input type="date" name="fecha"  class="form-control" required ><br>
+                                            </div>
+                                            <br>
+                
+                                            <label for="concepto">Concepto:</label>
+                                            <div class="input-group">
+                                                <textarea name="concepto" class="form-control" required></textarea>
+                                            </div>
+                                            <br>
+                
+                                            <label for="monto">Monto:</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" step="0.01" name="monto" required>
+                                                <span class="input-group-text">.00</span>
+                                            </div>                           
+                                            <br>
+                
+                                            <label for="iva">Tipo de IVA:</label>
+                                            <select name="iva" class="form-select" id="autoSizingSelect" required>
+                                                <option value="Ninguno" selected>Ninguno...</option>
+                                                <option value="CreditoFiscal">IVA Crédito Fiscal</option>
+                                                <option value="DebitoFiscal">IVA Débito Fiscal</option>
+                                            </select>
+                                            <br>                                               
+                                        </div>
+                                    </div>
+                                </div>                                               
+                
+                                <div class="col-sm-6">
+                                    <div class="card border-danger mb-3">
+                                        <div class="card-header text-danger fw-bold">Cargo</div>
+                                        <div class="card-body">
+                
+                                            <select name="cargo_cuenta" class="form-select cuenta-select"  data-clase-id="" required>
+                                                <option value="" selected disabled>Selecciona una cuenta</option>
+                                                {% for cuenta in cuentas %}
+                                                    <option value="{{ cuenta.id }}" data-clase-id="{{ cuenta.clase_id }}"> {{ cuenta.nombre }} ({{ cuenta.clase }}) </option>
+                                                {% endfor %}
+                                            </select><br>
+                                        </div>  
+                                    </div>
+                                    <div class="card border-primary mb-3">
+                                        <div class="card-header text-primary fw-bold">Abono</div>
+                                        <div class="card-body"> 
+                                            <select name="abono_cuenta" class="form-select" required>
+                                                <option value="" selected disabled>Selecciona una cuenta</option>
+                                                {% for cuenta in cuentas %}
+                                                    <option value="{{ cuenta.id }}">{{ cuenta.nombre }} ({{ cuenta.clase }})</option>
+                                                {% endfor %}
+                                            </select><br>
+                                        </div>                    
+                                    </div>
+                
+                                    <input type="submit" class="btn btn-success" value="Registrar Ajuste">     
+                                    <input type="button" class="btn btn-warning" value="Limpiar Campos" id="limpiarCampos">        
+                                </div>                    
+                            </div>                              
+                        </div>    
+                    </div>
+                </form> <!--FIn del Formulario-->    
+            </div>
+
             <!--Balance de Comprobacion Ajustado-->
             <div class="card">
             <br>
             <h5 class="card-title text-center">{{ titulo }}</h5> <!--Cambia el titulo del Balance General cuando se registra un ajuste-->
                 <div class="table-responsive">                        
-                    <table class="table table-bordered">
+                    <table class="table table-bordered border-dark">
                         <tr>
-                            <th>Cuenta</th>
-                            <th>Debe</th>
-                            <th>Haber</th>
+                            <th class="table-secondary">Cuenta</th>
+                            <th class="table-primary">Debe ($)</th>
+                            <th class="table-danger">Haber ($)</th>
                         </tr>
                         {% for cuenta in balance %}
                         <tr>
                             <td class="table-secondary">{{ cuenta.nombre_cuenta }}</td>
                             {% if cuenta.saldo_debe > 0 %}
-                                <td class="table-primary">$ {{ cuenta.total_debe }}</td>
-                                <td class="table-danger"> </td>
+                                <td class="table-primary">{{ cuenta.total_debe|default:'' }}</td>
+                                <td class="table-danger">‎</td>
                             {% else %}
-                                <td class="table-primary"></td>
-                                <td class="table-danger">$ {{ cuenta.total_haber }}</td>
+                                <td class="table-primary">‎</td>
+                                <td class="table-danger">{{ cuenta.total_haber|default:'' }}</td>
                             {% endif %}
                         </tr>
                         {% endfor %}
                     </table>
                 </div>                       
             </div>
-
+        </div>
+        <br>
+        <!--Columna 2-->
+        <div class="card-group">
             <!--Estado de Resultado-->
             <div class="card">
                 <br>
                 <h5 class="card-title text-center">Estado de Resultado</h5>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <tr>                            
+                    <table class="table table-bordered border-dark table-sm">
+                        <tr>                               
+                            <th class="table-secondary">Cuenta</th>
                             <th>Debe</th>
                             <th>Haber</th>
                         </tr>
+                        <!--Muestra solo las cuentas que son de tipo Resultado-->                        
                         {% for cuenta in balance %}
-                        <tr>
-                            <td>{{ cuenta.total_debe }}</td>
-                            <td>{{ cuenta.total_haber }}</td>
-                        </tr>
-                        {% endfor %}
+                            {% if cuenta.clase_cuenta.nombre == 'Resultado' %}
+                                <tr class="border-dark">
+                                    <td class="table-secondary">{{ cuenta.nombre_cuenta }}</td>
+                                {% if cuenta.saldo_debe > 0 %}
+                                    <td class="table-primary">{{ cuenta.total_debe|default:'' }}</td>
+                                    <td class="table-danger">‎</td>
+                                {% else %}
+                                    <td class="table-primary">‎</td>
+                                    <td class="table-danger">{{ cuenta.total_haber|default:'' }}</td>
+                                {% endif %}
+                                </tr>
+                            <!--Sino muestra vacio-->
+                            {% else %}
+                                <tr>
+                                    <td class="table-secondary">{{ cuenta.nombre_cuenta }}</td>   
+                                    <td>‎</td>
+                                    <td>‎</td>  
+                                </tr>                            
+                            {% endif %}
+                        {% endfor %}   
+                        <!--Utilidades--> 
+                        <tr class="table-info border-dark">
+                            <td class="table-info">Utilidades</td>   
+                            <td>{{ debe_utilidades }}</td>
+                            <td>{{ haber_utilidades }}</td>
+
+                        </tr> 
+                        <!--Capital Social-->
+                        <tr class="table-success border-dark">
+                            <td class="table-success">Capital Social</td>   
+                            <td></td>
+                            <td></td>
+                        </tr>     
+                                 
                     </table>
                 </div>
             </div>
-        </div>
-        <br>
-        <!--Columna 2-->
-        <div class="card-group">
             
             <!--Estado de Capital-->
             <div class="card">
                 <br>
                 <h5 class="card-title text-center">Estado de Capital</h5>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered border-dark table-sm">
                         <tr>                            
                             <th>Debe</th>
                             <th>Haber</th>
                         </tr>
                         {% for cuenta in balance %}
-                        <tr>
-                            <td>{{ cuenta.total_debe }}</td>
-                            <td>{{ cuenta.total_haber }}</td>
+                            {% if cuenta.clase_cuenta.nombre == 'Patrimonio' %}
+                                <tr>
+                                    {% if cuenta.saldo_debe > 0 %}
+                                        <td class="table-primary">‎</td>
+                                        <td class="table-danger">{{ cuenta.total_debe|default:'' }}</td>
+                                    {% else %}
+                                        <td class="table-primary">{{ cuenta.total_haber|default:'' }}</td>
+                                        <td class="table-danger">‎</td>
+
+                                    {% endif %}
+                                </tr>
+                            <!--Sino muestra vacio-->
+                            {% else %}
+                                <tr>
+                                    <td>‎</td>
+                                    <td>‎</td>  
+                                </tr>                            
+                            {% endif %}
+                        {% endfor %}  
+                        <!--Utilidades--> 
+                        <tr class="table-info border-dark">
+                            <td>{{ debe_utilidades }}</td>
+
+                            <td>{{ haber_utilidades }}</td>
+
+                        </tr> 
+                        <!--Capital Social-->
+                        <tr class="table-success border-dark">
+                            <td>{{ debe_capitalsocial }}</td>
+                            <td>{{ haber_capitalsocial }}</td>
                         </tr>
-                        {% endfor %}
                     </table>
                 </div>
             </div>
@@ -86,97 +218,50 @@
                 <br>
                 <h5 class="card-title text-center">Balance General</h5>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered border-dark table-sm">
                         <tr>                            
                             <th>Debe</th>
                             <th>Haber</th>
                         </tr>
                         {% for cuenta in balance %}
-                        <tr>
-                            <td>{{ cuenta.total_debe }}</td>
-                            <td>{{ cuenta.total_haber }}</td>
+                            {% if cuenta.clase_cuenta.nombre == 'Activo' or cuenta.clase_cuenta.nombre == 'Pasivo' %}
+                                <tr>
+                                    {% if cuenta.saldo_debe > 0 %}
+                                        <td>{{ cuenta.total_debe|default:'' }}</td>
+                                        <td>‎</td>
+                                    {% else %}
+                                        <td>‎</td>
+                                        <td>{{ cuenta.total_haber|default:'' }}</td>
+                                    {% endif %}
+                                </tr>
+                            <!--Sino muestra vacio-->
+                            {% else %}
+                                <tr>
+                                    <td>‎</td>
+                                    <td>‎</td>  
+                                </tr>                            
+                            {% endif %}
+                        {% endfor %}  
+                        <!--Utilidades--> 
+                        <tr class="table-info border-dark">
+                            <td>‎</td>
+                            <td>‎</td>
+
+                        </tr> 
+                        <!--Capital Social-->
+                        <tr class="table-success border-dark">
+                            <td>{{ debe_capitalsocial }}</td>
+                            <td>{{ haber_capitalsocial }}</td>
                         </tr>
-                        {% endfor %}
                     </table>
+                    <p>Total: Haber: {{ total_balancegeneral }}</p>
                 </div>
             </div>          
         </div>
     </div>
 <br>
 
-<!--Inicio del Formulario-->    
-<form id="formulario-transaccion" method="post" action="{% url 'hojaTrabajo' %}" onsubmit="return validarMonto()">
-  {% csrf_token %}
-  <div class="card">
-      <h5 class="card-header">Registro de Ajustes</h5>
-      <div class="card-body">
-          <div class="row">
-              <div class="col-sm-6">
-                  <div class="card">
-                      <div class="card-body">
-                          <label for="fecha">Fecha:</label>
-                          <div class="form-group">
-                              <input type="date" name="fecha"  class="form-control" required ><br>
-                          </div>
-                          <br>
 
-                          <label for="concepto">Concepto:</label>
-                          <div class="input-group">
-                              <textarea name="concepto" class="form-control" required></textarea>
-                          </div>
-                          <br>
-
-                          <label for="monto">Monto:</label>
-                          <div class="input-group mb-3">
-                              <span class="input-group-text">$</span>
-                              <input type="number" step="0.01" name="monto" required>
-                              <span class="input-group-text">.00</span>
-                          </div>                           
-                          <br>
-
-                          <label for="iva">Tipo de IVA:</label>
-                          <select name="iva" class="form-select" id="autoSizingSelect" required>
-                              <option value="Ninguno" selected>Ninguno...</option>
-                              <option value="CreditoFiscal">IVA Crédito Fiscal</option>
-                              <option value="DebitoFiscal">IVA Débito Fiscal</option>
-                          </select>
-                          <br>                                               
-                      </div>
-                  </div>
-              </div>                                               
-
-              <div class="col-sm-6">
-                  <div class="card border-danger mb-3">
-                      <div class="card-header text-danger fw-bold">Cargo</div>
-                      <div class="card-body">
-
-                          <select name="cargo_cuenta" class="form-select cuenta-select"  data-clase-id="" required>
-                              <option value="" selected disabled>Selecciona una cuenta</option>
-                              {% for cuenta in cuentas %}
-                                  <option value="{{ cuenta.id }}" data-clase-id="{{ cuenta.clase_id }}"> {{ cuenta.nombre }} ({{ cuenta.clase }}) </option>
-                              {% endfor %}
-                          </select><br>
-                      </div>  
-                  </div>
-                  <div class="card border-primary mb-3">
-                      <div class="card-header text-primary fw-bold">Abono</div>
-                      <div class="card-body"> 
-                          <select name="abono_cuenta" class="form-select" required>
-                              <option value="" selected disabled>Selecciona una cuenta</option>
-                              {% for cuenta in cuentas %}
-                                  <option value="{{ cuenta.id }}">{{ cuenta.nombre }} ({{ cuenta.clase }})</option>
-                              {% endfor %}
-                          </select><br>
-                      </div>                    
-                  </div>
-
-                  <input type="submit" class="btn btn-success" value="Registrar Ajuste">     
-                  <input type="button" class="btn btn-warning" value="Limpiar Campos" id="limpiarCampos">        
-              </div>                    
-          </div>                              
-      </div>    
-  </div>
-</form> <!--FIn del Formulario-->    
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
