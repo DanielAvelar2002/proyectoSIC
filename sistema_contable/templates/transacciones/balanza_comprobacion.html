@@ -8,7 +8,7 @@
     <h5 class="card-header">Balance de Comprobación</h5>
     <div class="card-body">
         <div class="table-responsive">
-             <table class="table table-bordered border-dark">
+            <table class="table table-bordered border-dark">
                 <tr>
                     <th class="table-secondary">Codigo</th>    
                     <th class="table-secondary">Cuenta</th>                        
@@ -16,25 +16,274 @@
                     <th class="table-danger">Haber ($)</th>
                 </tr>
 
-                {% for cuenta in balance %}
                 <tr>
-                    <td class="table-secondary">{{ cuenta.codigo_cuenta }}</td>
-                    <td class="table-secondary">{{ cuenta.nombre_cuenta }}</td>
-                    {% if cuenta.saldo_debe > 0 %}
-                        <td class="table-primary">{{ cuenta.total_debe|default:'' }}</td>
-                        <td class="table-danger">‎</td>
-                    {% else %}
-                        <td class="table-primary">‎</td>
-                        <td class="table-danger">{{ cuenta.total_haber|default:'' }}</td>
-                    {% endif %}
+                    <td colspan="4" class="table-success text-center fw-bold">Activos</td> 
                 </tr>
-                {% endfor %}
+                
+                <!--Activos-->
+                <!--Activos corrientes-->
+                <!--Efectivo-->
+                {% if debe_efectivo != 0 or haber_efectivo != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1101</td>    
+                        <td class="table-secondary">Efectivo</td>  
+                        <td class="table-primary">{{ debe_efectivo }}</td>
+                        <td class="table-danger">{{ haber_efectivo }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %}
+               
+                <!--Bancos-->
+                {% if debe_bancos != 0 or haber_bancos != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">Bancos</td>                        
+                        <td class="table-primary">{{ debe_bancos }}</td>
+                        <td class="table-danger">{{ haber_bancos }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %}    
+
+                <!--Cuentas por cobrar-->
+                {% if debe_cuentasporcobrar != 0 or haber_cuentasporcobrar != 0 %}  
+                    <tr>
+                        <td class="table-secondary">1103</td>    
+                        <td class="table-secondary">Cuentas por cobrar</td>                        
+                        <td class="table-primary">{{ debe_cuentasporcobrar }}</td>
+                        <td class="table-danger">{{ haber_cuentasporcobrar }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %}
+
+                <!--Documentos por cobrar-->
+                {% if debe_documentosporcobrar != 0 or debe_documentosporcobrar != 0 %}  
                 <tr>
-                    <td class="table-secondary"></td>
-                    <td class="table-secondary"><p class="fw-bolder">Totales:</td>
-                    <td class="table-primary"><p class="fw-bolder">{{ total_general_debe }}</p></td>
-                    <td class="table-danger"><p class="fw-bolder">{{ total_general_haber }}</p>   
-                    </td>
+                    <td class="table-secondary">1104</td>    
+                    <td class="table-secondary">Documentos por cobrar</td>                        
+                    <td class="table-primary">{{ debe_documentosporcobrar }}</td>
+                    <td class="table-danger">{{ haber_documentosporcobrar }}</td>
+                </tr>
+                {% else %}
+                {% endif %}
+
+                <!--Intereses por cobrar-->
+                {% if debe_interesesporcobrar != 0 or haber_interesesporcobrar != 0 %}  
+                    <tr>
+                        <td class="table-secondary">1105</td>    
+                        <td class="table-secondary">Intereses por cobrar</td>                        
+                        <td class="table-primary">{{ debe_interesesporcobrar }}</td>
+                        <td class="table-danger">{{ haber_interesesporcobrar }}</td>
+                    </tr>
+                {% else %}
+                {% endif %}
+             
+                <!--Gastos pagados por adelantado-->
+                {% if debe_gastospagadosporadelantado != 0 or haber_gastospagadosporadelantado != 0 %}  
+                    <tr>
+                        <td class="table-secondary">1106</td>    
+                        <td class="table-secondary">Gastos pagados por adelantado</td>                        
+                        <td class="table-primary">{{ debe_gastospagadosporadelantado }}</td>
+                        <td class="table-danger">{{ haber_gastospagadosporadelantado }}</td>
+                    </tr>
+                {% else %}
+                {% endif %}
+                
+                <!--Papelería y útiles	-->
+                {% if debe_papeleriayutiles != 0 or haber_papeleriayutiles != 0 %}
+                    <tr>
+                        <td class="table-secondary">1107</td>    
+                        <td class="table-secondary">Papelería y útiles</td>                        
+                        <td class="table-primary">{{ debe_papeleriayutiles }}</td>
+                        <td class="table-danger">{{ haber_papeleriayutiles }}</td>
+                    </tr>
+                {% else %}
+                {% endif %}
+
+                <!--Iva credito fiscal	-->
+                {% if debe_ivacreditofiscal != 0 or haber_ivacreditofiscal != 0 %}
+                    <tr>
+                        <td class="table-secondary">1107</td>    
+                        <td class="table-secondary">Iva credito fiscal</td>                        
+                        <td class="table-primary">{{ debe_ivacreditofiscal }}</td>
+                        <td class="table-danger">{{ haber_ivacreditofiscal }}</td>
+                    </tr>
+                {% else %}
+                {% endif %}
+
+                <!--Activos no corrientes-->
+                <!--Insumos-->
+                {% if debe_insumos != 0 or haber_insumos != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1101</td>    
+                        <td class="table-secondary">Insumos</td>  
+                        <td class="table-primary">{{ debe_insumos }}</td>
+                        <td class="table-danger">{{ haber_efectivo }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %}
+               
+                <!--Equipo informatico-->
+                {% if debe_equipoinformatico != 0 or haber_equipoinformatico != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">Equipo informatico</td>                        
+                        <td class="table-primary">{{ debe_equipoinformatico }}</td>
+                        <td class="table-danger">{{ haber_equipoinformatico }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %}  
+                
+                <!--Ventas-->
+                {% if debe_ventas != 0 or haber_ventas != 0 %}        
+                    <tr>
+                        <td class="table-secondary">Ventas</td>                        
+                        <td class="table-primary">{{ debe_ventas }}</td>
+                        <td class="table-danger">{{ haber_ventas }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %}
+
+                <tr>
+                    <td colspan="4" class="table-warning text-center fw-bold">Pasivos + Capital</td> 
+                </tr>
+                <!--Pasivos-->
+                <!--Corriente-->
+                <!--Cuentas por pagar-->
+                {% if debe_cuentasporpagar != 0 or haber_cuentasporpagar != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">Cuentas por pagar</td>                        
+                        <td class="table-primary">{{ debe_cuentasporpagar }}</td>
+                        <td class="table-danger">{{ haber_cuentasporpagar }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %}    
+
+                <!--Prestamos por pagar-->
+                {% if debe_prestamosporpagar != 0 or haber_prestamosporpagar != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">Prestamos por pagar</td>                        
+                        <td class="table-primary">{{ debe_prestamosporpagar }}</td>
+                        <td class="table-danger">{{ haber_prestamosporpagar }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %}  
+
+                <!--Sobregiros bancarios-->
+                {% if debe_sobregirosbancarios != 0 or haber_sobregirosbancarios != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">Prestamos por pagar</td>                        
+                        <td class="table-primary">{{ debe_sobregirosbancarios }}</td>
+                        <td class="table-danger">{{ haber_sobregirosbancarios }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <!--Otros titulos bancarios-->
+                {% if debe_otrostitulosvalores != 0 or haber_otrostitulosvalores != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">Otros titulos valores</td>                        
+                        <td class="table-primary">{{ debe_otrostitulosvalores }}</td>
+                        <td class="table-danger">{{ haber_otrostitulosvalores }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <!--ISSS-->
+                {% if debe_ISSS != 0 or haber_ISSS != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">ISSS</td>                        
+                        <td class="table-primary">{{ debe_ISSS }}</td>
+                        <td class="table-danger">{{ haber_ISSS }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <!--AFP-->
+                {% if debe_AFP != 0 or haber_AFP != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">AFP</td>                        
+                        <td class="table-primary">{{ debe_AFP }}</td>
+                        <td class="table-danger">{{ haber_AFP }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <!--Renta-->
+                {% if debe_renta != 0 or haber_renta != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">AFP</td>                        
+                        <td class="table-primary">{{ debe_renta }}</td>
+                        <td class="table-danger">{{ haber_renta }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <!--IVA-->
+                {% if debe_IVA != 0 or haber_IVA != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">AFP</td>                        
+                        <td class="table-primary">{{ debe_IVA }}</td>
+                        <td class="table-danger">{{ haber_IVA }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+                
+                <!--Iva debito fiscal-->
+                {% if debe_ivadebitofiscal != 0 or haber_ivadebitofiscal != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">AFP</td>                        
+                        <td class="table-primary">{{ debe_ivadebitofiscal }}</td>
+                        <td class="table-danger">{{ haber_ivadebitofiscal }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <!--Intereses percibidos-->
+                {% if debe_interesespercibidos != 0 or haber_interesespercibidos != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">AFP</td>                        
+                        <td class="table-primary">{{ debe_interesespercibidos }}</td>
+                        <td class="table-danger">{{ haber_interesespercibidos }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <!--Documentos por pagar-->
+                {% if debe_documentosporpagar != 0 or haber_documentosporpagar != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">AFP</td>                        
+                        <td class="table-primary">{{ debe_documentosporpagar }}</td>
+                        <td class="table-danger">{{ haber_documentosporpagar }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <!--Capital-->
+                {% if debe_capital != 0 or haber_capital != 0 %}        
+                    <tr>
+                        <td class="table-secondary">1102</td>    
+                        <td class="table-secondary">Capital</td>                        
+                        <td class="table-primary">{{ debe_capital }}</td>
+                        <td class="table-danger">{{ haber_capital }}</td>
+                    </tr>
+                {% else %}                                        
+                {% endif %} 
+
+                <tr class="fw-bold">
+                    <td colspan="2" class="table-secondary text-center">Totales</td>    
+                    <td class="table-primary">{{ debe_total }}</td>                        
+                    <td class="table-danger">{{ haber_total }}</td>
                 </tr>
             </table>
         </div>

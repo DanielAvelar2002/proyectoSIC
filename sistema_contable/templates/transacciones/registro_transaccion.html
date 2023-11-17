@@ -17,7 +17,6 @@
                             <div class="form-group">
                                 <input type="date" name="fecha"  class="form-control" required ><br>
                             </div>
-                            <br>
 
                             <label for="concepto">Concepto:</label>
                             <div class="input-group">
@@ -31,15 +30,13 @@
                                 <input type="number" step="0.01" name="monto" required>
                                 <span class="input-group-text">.00</span>
                             </div>                           
-                            <br>
 
                             <label for="iva">Tipo de IVA:</label>
                             <select name="iva" class="form-select" id="autoSizingSelect" required>
                                 <option value="Ninguno" selected>Ninguno...</option>
                                 <option value="CreditoFiscal">IVA Crédito Fiscal</option>
                                 <option value="DebitoFiscal">IVA Débito Fiscal</option>
-                            </select>
-                            <br>                                               
+                            </select>                                               
                         </div>
                     </div>
                 </div>                                               
@@ -53,7 +50,7 @@
                                 {% for cuenta in cuentas %}
                                     <option value="{{ cuenta.id }}" data-clase-id="{{ cuenta.clase_id }}"> {{ cuenta.nombre }} ({{ cuenta.clase }}) </option>
                                 {% endfor %}
-                            </select><br>
+                            </select>
                         </div>  
                     </div>
 
@@ -65,7 +62,7 @@
                                 {% for cuenta in cuentas %}
                                     <option value="{{ cuenta.id }}">{{ cuenta.nombre }} ({{ cuenta.clase }})</option>
                                 {% endfor %}
-                            </select><br>
+                            </select>
                         </div>                    
                     </div>
 
